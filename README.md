@@ -35,7 +35,7 @@ with typescript, testing support and default CI/CD configuration.
 
 <br>
 
-## Start Application
+## Set Application
 
 - Install using `npx @adomne/express-ts-jest-boilerplate my-own-starter-project`
 
@@ -43,8 +43,6 @@ with typescript, testing support and default CI/CD configuration.
 
 - Clone the Application `git clone https://github.com/adomne/express-ts-jest-boilerplate.git`
 - Install the dependencies `npm install`
-- Start the application `npm start`
-- Before starting make sure to create a `.env` environment file
 
 <br>
 

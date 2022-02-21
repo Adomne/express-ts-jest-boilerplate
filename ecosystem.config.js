@@ -18,13 +18,13 @@ module.exports = {
     ],
     deploy: {
         production: {
-            user: "SERVER-HOSTNAME", // ie. root
+            user: "root",
             host: "SERVER-IP-ADDRESS", // ie. 100.14.103.199
             key: "deploy.key",
             ref: "origin/master", // Change branch
             repo: "GITHUB-REPO", // ie. https://github.com/user/project-name
-            path: "ROOT-FOLDER", // either /root/source or /home/user/source
-            "pre-setup": "rm -rf /root/source/", // either /root/source or /home/user/source
+            path: "/root",
+            "pre-setup": "rm -rf /root/source/",
             "post-setup": "npm install && npm install -D && mkdir config && cp ~/.env config/ && npm run build && pm2 reload ecosystem.config.js --env production && pm2 save && git checkout package-lock.json",
             env: {
                 // ADD all env variables here

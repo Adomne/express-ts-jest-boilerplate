@@ -4,8 +4,6 @@
 
 1. **[Initial Server Setup with Ubuntu](#Initial-Server-Setup-with-Ubuntu)**
     - **[Logging in as Root to VPS](#Logging-in-as-Root-to-VPS)**
-    - **[Create a New User](#Create-a-New-User)**
-    - **[Granting Admin Privileges](#Granting-Admin-Privileges)**
     - **[Setting Up a Basic Firewall](#Setting-Up-a-Basic-Firewall)**
 2. **[Install Nginx on Ubuntu](#Install-Nginx-on-Ubuntu)**.
     - **[Installing Nginx](#Installing-Nginx)**
@@ -31,6 +29,7 @@
     - **[Github Secrets configuration](#Github-Secrets-configuration)**
     - **[RSA deletion](#RSA-deletion)**
 8. **[Monitoring CPU & Memory](#Monitoring-CPU-&-Memory)**
+9. **[EnvVars Configuration](#EnvVars-Configuration)**
 
 <br>
 
@@ -54,26 +53,20 @@ Github Actions and PM2 to monitor your app.
 
 ### *Logging in as Root to VPS*
 
-`$ ssh root@your_server_ip`
-
-### *Create a New User*
-
-`$ adduser NEW-USERNAME`
-
-### *Granting Admin Privileges*
-
-`$ usermod -aG sudo NEW-USERNAME`
+```bash
+ssh root@your_server_ip
+```
 
 ### *Setting Up a Basic Firewall*
 
 ```bash
-$ ufw app list
+ufw app list
 
-$ ufw allow OpenSSH
+ufw allow OpenSSH
 
-$ ufw enable
+ufw enable
 
-$ ufw status
+ufw status
 ```
 
 <br>
@@ -84,24 +77,24 @@ $ ufw status
 ### *Installing Nginx*
 
 ```bash
-$ sudo apt update
+sudo apt update
 
-$ sudo apt install nginx
+sudo apt install -y nginx 
 ```
 
 ### *Adjusting the Firewall*
 
 ```bash
-$ sudo ufw app list
+sudo ufw app list
 
-$ sudo ufw allow 'Nginx HTTP'
+sudo ufw allow 'Nginx HTTP'
 
-$ sudo ufw status
+sudo ufw status
 ```
 
 ### *Web Server Status*
 
-`$ systemctl status nginx`
+`systemctl status nginx`
 
 Enter the server's IP address into your browser's address bar:
 
@@ -114,29 +107,29 @@ You should get a webpage with the message: "Welcome to nginx! "
 To test nginx service, you can use the following commands:
 
 ```bash
-$ sudo systemctl stop nginx
+sudo systemctl stop nginx
 
-$ sudo systemctl start nginx
+sudo systemctl start nginx
 
-$ sudo systemctl restart nginx
+sudo systemctl restart nginx
 
-$ sudo systemctl reload nginx
+sudo systemctl reload nginx
 
-$ sudo systemctl status nginx
+sudo systemctl status nginx
 ```
 
 ### *Setting Up Server Blocks*
 
-**To test nginx service, you can use the following commands:**
+**To configure nginx service, you can use the following commands:**
 
 ```bash
-$ sudo mkdir -p /var/www/your_domain/html
+sudo mkdir -p /var/www/your_domain/html
 
-$ sudo chown -R $USER:$USER /var/www/your_domain/html
+sudo chown -R $USER:$USER /var/www/your_domain/html
 
-$ sudo chmod -R 755 /var/www/your_domain
+sudo chmod -R 755 /var/www/your_domain
 
-$ nano /var/www/your_domain/html/index.html
+nano /var/www/your_domain/html/index.html
 ```
 
 Inside `/var/www/your_domain/html/index.html` add the following: 
@@ -154,7 +147,7 @@ Inside `/var/www/your_domain/html/index.html` add the following:
 
 Run:
 ```bash
-$ sudo nano /etc/nginx/sites-available/your_domain
+sudo nano /etc/nginx/sites-available/your_domain
 ```
 
 Update `/etc/nginx/sites-available/your_domain` with the following:
@@ -178,7 +171,7 @@ server {
 **To enable the file, create a link from it to `sites-enable` director with the following command:**
 
 ```bash
-$ sudo ln -s /etc/nginx/sites-available/your_domain /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/your_domain /etc/nginx/sites-enabled/
 ```
 
 To avoid a possible hash bucket memory problem that can arise from adding
@@ -198,13 +191,15 @@ http {
 *Make sure there are no syntax errors in any Nginx file:*
 
 ```bash
-$ sudo nginx -t
+sudo nginx -t
+
 ```
 
 *Restart Nginx*
 
 ```bash
-$ sudo systemctl restart nginx
+sudo systemctl restart nginx
+
 ```
 <br>
 
@@ -214,51 +209,54 @@ $ sudo systemctl restart nginx
 ### *Firewall Rules with UFW*
 
 ```bash
-$ sudo apt update
+sudo apt update
 
-$ sudo ufw allow ssh
+sudo ufw allow ssh
 
-$ sudo ufw allow http
+sudo ufw allow http
 
-$ sudo ufw allow https
+sudo ufw allow https
 
-$ sudo ufw enable
+sudo ufw enable
 
-$ sudo ufw status
+sudo ufw status
+
 ```
 
 ### *Install Snapd*
 
 ```bash
-$ sudo apt update
+sudo apt update
 
-$ sudo apt install snapd
+sudo apt install snapd
 
-$ sudo snap install core
+sudo snap install core
 
-$ sudo snap refresh core
+sudo snap refresh core
+
 ```
 
 ### *Install Certbot*
 
 ```bash
-$ sudo apt remove certbot
+sudo apt remove certbot
 
-$ sudo snap install --classic certbot
+sudo snap install --classic certbot
 
-$ sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+
 ```
 
 ### *Request SSL Certificate Using Certbot*
 
 ```bash
-$ sudo ufw allow 'Nginx Full'
+sudo ufw allow 'Nginx Full'
 
-$ sudo ufw delete allow 'Nginx HTTP'
+sudo ufw delete allow 'Nginx HTTP'
 
-$ sudo ufw status
+sudo ufw status
 
-$ sudo certbot --nginx -d your_domain -d www.your_domain
+sudo certbot --nginx -d your_domain -d www.your_domain
 ```
 <br>
 
@@ -268,25 +266,25 @@ $ sudo certbot --nginx -d your_domain -d www.your_domain
 ### *Install Nodejs*
 
 ```bash
-$ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 
-$ sudo apt-get install -y nodejs
+sudo apt-get install -y nodejs
 
-$ node -v
+node -v
 
-$ npm -v
+npm -v
 
-$ sudo apt install build-essential
+sudo apt install build-essential
+
 ```
-*Note*
+*Note* <br>
 
 - Node version: +16.x (don't use 17.x yet)
-- Don't use `sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u newuser --hp /home/newuser` if you're using root.
 
 ### *Set Up Nginx as a Reverse Proxy Server*
 
 ```bash
-$ sudo nano /etc/nginx/sites-available/example.com
+sudo nano /etc/nginx/sites-available/example.com
 ```
 
 Within the `server` block, you should have an existing `location /` block.
@@ -312,13 +310,13 @@ Change port 3000 with your App's port (ie. `3150`).
 Check that everything is ok:
 
 ```bash
-$ sudo nginx -t
+sudo nginx -t
 ```
 
 *Restart Nginx*
 
 ```bash
-$ sudo systemctl restart nginx
+sudo systemctl restart nginx
 ```
 
 <br>
@@ -329,11 +327,11 @@ $ sudo systemctl restart nginx
 ### *Install PM2 and CLI autocompletion*
 
 ```bash
-$ sudo npm install pm2 -g
+sudo npm install pm2 -g
 
-$ sudo apt update && sudo apt install curl && sudo curl -sL https://raw.githubusercontent.com/Unitech/pm2/master/packager/setup.deb.sh | sudo -E bash -
+sudo apt update && sudo apt install curl && sudo curl -sL https://raw.githubusercontent.com/Unitech/pm2/master/packager/setup.deb.sh | sudo -E bash -
 
-$ pm2 completion install
+pm2 completion install
 ```
 
 <br>
@@ -344,15 +342,15 @@ $ pm2 completion install
 ### *Install gh on Debian and Ubuntu Linux*
 
 ```bash
-$ sudo curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+sudo curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
 
-$ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
-$ sudo apt update
+sudo apt update
 
-$ sudo apt install gh
+sudo apt install gh
 
-$ gh auth login
+gh auth login
 ```
 
 <br>
@@ -366,7 +364,7 @@ $ gh auth login
 On your local machine, run:
 
 ```bash
-$ ssh-keygen -t rsa -b 4096 -C "username@SERVER_IP_ADDRESS" -q -N ""
+ssh-keygen -t rsa -b 4096 -C "root@SERVER_IP_ADDRESS" -q -N ""
 ```
 
 When prompted about file location, add whichever name you like, ie.
@@ -376,7 +374,7 @@ When prompted about file location, add whichever name you like, ie.
 ### *Remote server configuration*
 
 ```bash
-$ cat github_rsa.pub | xclip
+cat github_rsa.pub | xclip
 ```
 
 You can use `xclip`, `pbcopy`, etc... or just plain cat and copy from terminal output.
@@ -384,17 +382,17 @@ You can use `xclip`, `pbcopy`, etc... or just plain cat and copy from terminal o
 Login to remote server, add the copied value to the `authorized_keys`:
 
 ```bash
-$ echo "ssh-rsa AAAA....YOUR_PUBLIC_KEY..." >> ~/.ssh/authorized_keys
+echo "ssh-rsa AAAA....YOUR_PUBLIC_KEY..." >> ~/.ssh/authorized_keys
 ```
 
 ### *Github Secrets configuration*
 
 - Secret key:
-  - `$ cat github_rsa | xclip`
+  - `cat github_rsa | xclip`
   - In Github, create a new secret named `SSH_PRIVATE_KEY` and paste in the contents.
 
 - Known hosts:
-  - `$ ssh-keyscan SERVER_IP > xclip`
+  - `ssh-keyscan SERVER_IP > xclip`
   - In Github, create a new secret named `SSH_KNOWN_HOSTS` and paste in the contents.
 
 ### *RSA deletion*
@@ -405,4 +403,21 @@ Delete `github_rsa` and `github_rsa.pub`.
 ## <ins>Monitoring CPU & Memory</ins>
 [Go to Content](#Contents)
 
-run `pm2 monitor` and follow instructions.
+Rrun `pm2 monitor` and follow instructions.
+
+<br>
+
+##  <ins>EnvVars Configuration</ins>
+[Go to Content](#Contents)
+
+- Before starting make sure to create a `.env` environment file and move it to
+  home. 
+
+Using `scp`:
+
+  ```bash 
+scp ./.env root@SERVER_IP_ADDR:/root
+  ```
+
+**Note** <br>
+This step is to configure `env` inside the VPS (The `setup` script use this file).
