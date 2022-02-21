@@ -1,6 +1,6 @@
 {
   "name": "@adomne/express-ts-jest-boilerplate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ExpressJS App implemented with Typescript and Jest Testing Framework",
   "main": "./dist/app.js",
   "scripts": {
@@ -21,7 +21,6 @@
     "precommit": "npm run lint-fix && npm run pretty",
     "prepush": "npm run lint"
   },
-
   "keywords": [
     "express",
     "node",
