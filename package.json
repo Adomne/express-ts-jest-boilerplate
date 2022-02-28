@@ -1,6 +1,6 @@
 {
   "name": "@adomne/express-ts-jest-boilerplate",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "ExpressJS App implemented with Typescript and Jest Testing Framework",
   "main": "./dist/app.js",
   "scripts": {
