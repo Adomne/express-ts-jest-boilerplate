@@ -252,7 +252,9 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot
 ```bash
 sudo ufw allow 'Nginx Full'
 
-sudo ufw delete allow 'Nginx HTTP'
+sudo ufw status numbered
+
+sudo ufw delete 10 # ie. [10] Nginx HTTP   ALLOW IN    Anywhere
 
 sudo ufw status
 
