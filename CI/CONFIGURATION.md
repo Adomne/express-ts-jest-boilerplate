@@ -405,7 +405,7 @@ Delete `github_rsa` and `github_rsa.pub`.
 ## <ins>Monitoring CPU & Memory</ins>
 [Go to Content](#Contents)
 
-Rrun `pm2 monitor` and follow instructions.
+Run `pm2 monitor` and follow instructions.
 
 <br>
 
