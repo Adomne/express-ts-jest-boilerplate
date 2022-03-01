@@ -78,16 +78,16 @@ with typescript, testing support and default CI/CD configuration.
 
 ## Notes
 
-### 1. Husky Configuration files (pre-commit and pre-push)
+#### 1. Husky Configuration files (pre-commit and pre-push)
 
 - Check CONFIGURATION.md inside `.husky` folder.
 
-### 2. [Check Express Best Practices to Secure Your App](https://expressjs.com/en/advanced/best-practice-security.html)
+#### 2. [Check Express Best Practices to Secure Your App](https://expressjs.com/en/advanced/best-practice-security.html)
 
 <br>
 <br>
 
 <hr/>
 
-### *Follow us on* [Twitter](http://www.twitter.com/adomneHQ), [Instagram](http://www.instagram.com/adomnehq), [Linkedin](https://www.linkedin.com/company/adomnehq), and [Github](http://www.github.com/adomne).
+#### *Follow us on* [Twitter](http://www.twitter.com/adomneHQ), [Instagram](http://www.instagram.com/adomnehq), [Linkedin](https://www.linkedin.com/company/adomnehq), and [Github](http://www.github.com/adomne).
 
